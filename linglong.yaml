@@ -1,0 +1,63 @@
+version: "1"
+
+package:
+  id: org.deepin.runtime.wine
+  name: deepin wine runtime
+  kind: runtime
+  version: 23.2.0.0
+  description: |
+    Wine is a compatibility layer capable of running Windows applications  
+    on Unix-like operating systems. It provides both a development toolkit  
+    for porting Windows sources to Unix and a program loader, allowing many  
+    unmodified Windows binaries to run on x86, x86_64, and ARM architectures.
+
+
+base: org.deepin.base.wine/23.2.0
+
+sources:
+  - kind: file
+    url: https://aptly.uniontech.com/pkg/nonfree-eagle/release-candidate/d2luZTgtcnVudGltZTIyMDI0LTA5LTAzIDEzOjE1OjAx/pool/non-free/d/deepin-wine8-stable/deepin-wine8-stable_8.16deepin21_amd64.deb
+    digest: c9770023df95d0694c3fe1363f0fb307d0f8f2a6632c5f67ebde8b5904f7c8d0
+  - kind: file
+    url: https://aptly.uniontech.com/pkg/nonfree-eagle/release-candidate/d2luZTgtcnVudGltZTIyMDI0LTA5LTAzIDEzOjE1OjAx/pool/non-free/d/deepin-wine-helper/deepin-wine-helper_5.3.20-1_amd64.deb
+    digest: dd2a104fc6534fe4b3ce8cd92078dfe94fc74ac3b69248853d2a57401e81f94d
+
+build: |
+  # 设置.deb包的路径  
+  SOURCES="linglong/sources"  
+  DEB_PACKAGE_WINE="$SOURCES/deepin-wine8-stable_8.16deepin21_amd64.deb"  
+  DEB_PACKAGE_HELPER="$SOURCES/deepin-wine-helper_5.3.20-1_amd64.deb"
+  # 使用dpkg-deb解压.deb包的runtime部分到临时目录  
+  TEMP_DIR="$(mktemp -d)"  
+  dpkg-deb -x "$DEB_PACKAGE_WINE" "$TEMP_DIR"  
+  dpkg-deb -x "$DEB_PACKAGE_HELPER" "$TEMP_DIR" 
+
+  #更新原本/usr/bin/deepin-wine8-stable脚本的内容
+  sed -i '/deepin-wine8-stable/d' $TEMP_DIR/usr/bin/deepin-wine8-stable
+  sed -i '$a parent_dir=$(dirname "$(realpath "$0")")' $TEMP_DIR/usr/bin/deepin-wine8-stable
+  sed -i '$a grandparent_dir=$(dirname "$parent_dir")' $TEMP_DIR/usr/bin/deepin-wine8-stable
+  sed -i '$a export WINEDLLPATH=$grandparent_dir/deepin-wine8-stable/lib/wine' $TEMP_DIR/usr/bin/deepin-wine8-stable
+  sed -i '$a $grandparent_dir/deepin-wine8-stable/bin/wine "$@"' $TEMP_DIR/usr/bin/deepin-wine8-stable
+
+  #更新原本/opt/deepinwine/tools/run_v4.sh脚本的内容
+  sed -i 's/\/opt\/deepinwine/\/runtime\/deepinwine/g' $TEMP_DIR/opt/deepinwine/tools/run_v4.sh
+  sed -i 's/\/opt\/deepinemu/\/runtime\/deepinemu/g' $TEMP_DIR/opt/deepinwine/tools/run_v4.sh
+  sed -i 's/WINEPREFIX="$HOME\/.deepinwine\/$1"/WINEPREFIX="$HOME\/.linglong\/$1"/g' $TEMP_DIR/opt/deepinwine/tools/run_v4.sh
+
+  # 检查解压后的目录结构，并释放runtime目录到/runtime  
+  OPT_PATH="$TEMP_DIR/opt"  
+  if [ -d "$OPT_PATH" ]; then  
+      # 释放opt目录到/runtime  
+      # 使用rsync来避免复制过程中的一些问题，比如链接和特殊文件  
+      rsync -avh --progress "$OPT_PATH"/ /runtime/  
+  fi   
+
+  USR_PATH="$TEMP_DIR/usr"  
+  if [ -d "$USR_PATH" ]; then  
+      # 释放usr目录到/runtime  
+      # 使用rsync来避免复制过程中的一些问题，比如链接和特殊文件  
+      rsync -avh --progress "$USR_PATH"/ /runtime/  
+  fi   
+
+  # 清理临时目录  
+  rm -rf "$TEMP_DIR"  
