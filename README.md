@@ -1,3 +1,4 @@
+>最新版本在gitlab上，请联系王洪彪
 # org.deepin.runtime.wine
 
 
