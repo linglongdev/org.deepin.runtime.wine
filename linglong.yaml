@@ -4,7 +4,7 @@ package:
   id: org.deepin.runtime.wine
   name: deepin wine runtime
   kind: runtime
-  version: 23.2.1.6
+  version: 23.2.1.7
   description: |
     Wine is a compatibility layer capable of running Windows applications  
     on Unix-like operating systems. It provides both a development toolkit  
@@ -12,12 +12,12 @@ package:
     unmodified Windows binaries to run on x86, x86_64, and ARM architectures.
 
 
-base: org.deepin.base.wine/23.2.0
+base: org.deepin.base.wine/23.2.0.5
 
 sources:
   - kind: file
-    url: https://winedata-dev.deepin.com/deepin-wine/0e110769c9a/signed_deepin-wine8-stable_8.16deepin26_amd64.deb
-    digest: fad0e236647ec63973d2dea45d1f4712b064f449ffaea7532da695395f5ee065
+    url: https://winedata-dev.deepin.com/deepin-wine/1e8eeb45030/signed_deepin-wine8-stable_8.16deepin29_amd64.deb
+    digest: 3210c294478e5f19f0927d4a9461117e673abfdbf1ba894c2c1c6849815e594d
   - kind: file
     url: https://aptly.uniontech.com/pkg/nonfree-eagle/release-candidate/d2luZTgtcnVudGltZTIyMDI0LTA5LTAzIDEzOjE1OjAx/pool/non-free/d/deepin-wine-helper/deepin-wine-helper_5.3.20-1_amd64.deb
     digest: dd2a104fc6534fe4b3ce8cd92078dfe94fc74ac3b69248853d2a57401e81f94d
@@ -25,7 +25,7 @@ sources:
 build: |
   # 设置.deb包的路径  
   SOURCES="linglong/sources"  
-  DEB_PACKAGE_WINE="$SOURCES/signed_deepin-wine8-stable_8.16deepin26_amd64.deb"  
+  DEB_PACKAGE_WINE="$SOURCES/signed_deepin-wine8-stable_8.16deepin29_amd64.deb"  
   DEB_PACKAGE_HELPER="$SOURCES/deepin-wine-helper_5.3.20-1_amd64.deb"
   # 使用dpkg-deb解压.deb包的runtime部分到临时目录  
   TEMP_DIR="$(mktemp -d)"  
@@ -37,8 +37,8 @@ build: |
       cat > $TEMP_DIR/opt/version.yaml << EOF
   version:
       base: 23.2.0.5
-      runtime: 23.2.1.6
-      deepin-wine8-stable: signed_deepin-wine8-stable_8.16deepin26_amd64.deb
+      runtime: 23.2.1.7
+      deepin-wine8-stable: signed_deepin-wine8-stable_8.16deepin29_amd64.deb
       deepin-wine-helper: deepin-wine-helper_5.3.20-1_amd64.deb
   EOF
       if [ -f "$TEMP_DIR/opt/version.yaml" ]; then  
