@@ -16,8 +16,8 @@ base: org.deepin.base.wine/23.0.0/arm64
 
 sources:
   - kind: file
-    url: https://aptly.uniontech.com/pkg/eagle/release-candidate/ZGVlcGluLWJveDY0IDAuMy4yMjAyNS0wMS0wOSAxNTo0MzoxOA/pool/main/d/deepin-box64/deepin-box64_0.3.2deepin1-1_arm64.deb
-    digest: 547fbeaf0835edd9c8ebc08167a7a7940ab663641f072dedf4d017992a770222
+    url: https://aptly.uniontech.com/pkg/eagle/release-candidate/ZGVlcGluLWJveDY0IDAuMy4yMjAyNS0wMS0wOSAxNTo0MzoxOA/pool/main/d/deepin-box64/deepin-box64_0.3.2deepin3-1_arm64.deb
+    digest: 15e236890fdcfd9b15c200c6b20f1ccd8719d43104749632fc846c9ff5cadfca
   - kind: file
     url: https://winedata-dev.deepin.com/deepin-wine/1e8eeb45030/signed_deepin-wine8-stable_8.16deepin29_arm64.deb
     digest: 86056faead25b51fd1d155002f429c03b1cacff2bc4fb2038654bf082282f251
@@ -30,7 +30,7 @@ build: |
   SOURCES="linglong/sources"  
   DEB_PACKAGE_WINE="$SOURCES/signed_deepin-wine8-stable_8.16deepin29_arm64.deb"  
   DEB_PACKAGE_HELPER="$SOURCES/com.wine-helper.deepin_5.3.21-1_arm64.deb"
-  DEB_PACKAGE_BOX="$SOURCES/deepin-box64_0.3.2deepin1-1_arm64.deb"
+  DEB_PACKAGE_BOX="$SOURCES/deepin-box64_0.3.2deepin3-1_arm64.deb"
 
   # 使用dpkg-deb解压.deb包的runtime部分到临时目录  
   TEMP_DIR="$(mktemp -d)"  
