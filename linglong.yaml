@@ -4,7 +4,7 @@ package:
   id: org.deepin.runtime.wine
   name: deepin wine runtime
   kind: runtime
-  version: 23.2.1.8
+  version: 23.2.1.9
   description: |
     Wine is a compatibility layer capable of running Windows applications  
     on Unix-like operating systems. It provides both a development toolkit  
