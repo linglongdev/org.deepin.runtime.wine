@@ -37,7 +37,7 @@ build: |
       cat > $TEMP_DIR/opt/version.yaml << EOF
   version:
       base: 23.2.0.5
-      runtime: 23.2.1.7
+      runtime: 23.2.1.8
       deepin-wine8-stable: signed_deepin-wine8-stable_8.16deepin29_amd64.deb
       deepin-wine-helper: deepin-wine-helper_5.3.20-1_amd64.deb
   EOF
