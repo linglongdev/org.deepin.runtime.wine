@@ -37,13 +37,32 @@ build: |
   dpkg-deb -x "$DEB_PACKAGE_WINE" "$TEMP_DIR"  
   dpkg-deb -x "$DEB_PACKAGE_HELPER" "$TEMP_DIR" 
   dpkg-deb -x "$DEB_PACKAGE_BOX" "$TEMP_DIR"
+  # 添加一个版本文件
+  mkdir -p $TEMP_DIR/opt/
+  if [ -d "$TEMP_DIR/opt/" ]; then
+      cat > $TEMP_DIR/opt/version.yaml << EOF
+  version:
+      base: 23.0.0
+      runtime: 23.0.0.6
+      deepin-box64: deepin-box64_0.3.2deepin3-1_arm64.deb
+      deepin-wine8-stable: signed_deepin-wine8-stable_8.16deepin29_arm64.deb
+      deepin-wine-helper: com.wine-helper.deepin_5.3.25-1_arm64.deb
+  EOF
+      if [ -f "$TEMP_DIR/opt/version.yaml" ]; then
+          echo "成功在 $TEMP_DIR/opt/ 目录下创建 version.yaml 文件"
+      else
+          echo "创建 version.yaml 文件失败"
+      fi
+  else
+      echo "创建 $TEMP_DIR/opt/ 目录失败"
+  fi
 
   # 更新原本/usr/bin/deepin-box64脚本的内容
   sed -i '/deepin-box64/d' $TEMP_DIR/usr/bin/deepin-box64  
   sed -i '$a parent_dir=$(dirname "$(realpath "$0")")' $TEMP_DIR/usr/bin/deepin-box64
   sed -i '$a grandparent_dir=$(dirname "$parent_dir")' $TEMP_DIR/usr/bin/deepin-box64
   sed -i '$a export BOX64_LD_LIBRARY_PATH="$grandparent_dir/deepin-box64/lib/x86_64-linux-gnu:$BOX64_LD_LIBRARY_PATH"' $TEMP_DIR/usr/bin/deepin-box64
-  sed -i '$a $grandparent_dir/deepin-box64/box64 "$@"'
+  sed -i '$a $grandparent_dir/deepin-box64/box64 "$@"'  $TEMP_DIR/usr/bin/deepin-box64
 
   #更新原本/usr/bin/deepin-wine8-stable脚本的内容
   sed -i '/deepin-wine8-stable/d' $TEMP_DIR/usr/bin/deepin-wine8-stable
