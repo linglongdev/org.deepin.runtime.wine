@@ -4,7 +4,7 @@ package:
   id: org.deepin.runtime.wine
   name: deepin wine runtime
   kind: runtime
-  version: 23.2.1.13
+  version: 23.2.1.14
   description: |
     Wine is a compatibility layer capable of running Windows applications  
     on Unix-like operating systems. It provides both a development toolkit  
@@ -22,8 +22,8 @@ sources:
     url: https://winedata-dev.deepin.com/deepin-wine/1e8eeb45030/signed_deepin-wine8-stable_8.16deepin29_arm64.deb
     digest: 86056faead25b51fd1d155002f429c03b1cacff2bc4fb2038654bf082282f251
   - kind: file
-    url: https://aptly.uniontech.com/pkg/nonfree-eagle/release-candidate/ZGVlcGluLXdpbmUtaGVscGVyXzIwMjQwNDA5MjAyNC0wNC0wOSAxODoxNjoyMQ/pool/non-free/d/deepin-wine-helper/com.wine-helper.deepin_5.3.25-1_arm64.deb
-    digest: 5b591f948838a5500066153f06886168c682277b959bf0a90cbd87e20082f853
+    url: https://aptly.uniontech.com/pkg/nonfree-eagle/release-candidate/ZGVlcGluLXdpbmUtaGVscGVyIDUuMy4yNjIwMjUtMDMtMTkgMTQ6MTY6MTI/pool/non-free/d/deepin-wine-helper/com.wine-helper.deepin_5.3.27-1_arm64.deb
+    digest: c77fe6949c394b59a778dbe7ccdbfcb00ab2aa02812273520da71ad35fa9eaa3
 
 build: |
   # 设置.deb包的路径  
