@@ -29,7 +29,7 @@ build: |
   # 设置.deb包的路径  
   SOURCES="linglong/sources"  
   DEB_PACKAGE_WINE="$SOURCES/signed_deepin-wine8-stable_8.16deepin29_arm64.deb"  
-  DEB_PACKAGE_HELPER="$SOURCES/com.wine-helper.deepin_5.3.25-1_arm64.deb"
+  DEB_PACKAGE_HELPER="$SOURCES/com.wine-helper.deepin_5.3.27-1_arm64.deb"
   DEB_PACKAGE_BOX="$SOURCES/deepin-box64_0.3.2deepin5-1_arm64.deb"
 
   # 使用dpkg-deb解压.deb包的runtime部分到临时目录  
@@ -46,7 +46,7 @@ build: |
       runtime: 23.2.1.13
       deepin-box64: deepin-box64_0.3.2deepin5-1_arm64.deb
       deepin-wine8-stable: signed_deepin-wine8-stable_8.16deepin29_arm64.deb
-      deepin-wine-helper: com.wine-helper.deepin_5.3.25-1_arm64.deb
+      deepin-wine-helper: com.wine-helper.deepin_5.3.27-1_arm64.deb
   EOF
       if [ -f "$TEMP_DIR/opt/version.yaml" ]; then
           echo "成功在 $TEMP_DIR/opt/ 目录下创建 version.yaml 文件"
