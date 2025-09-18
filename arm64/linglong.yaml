@@ -4,7 +4,7 @@ package:
   id: org.deepin.runtime.wine
   name: deepin wine runtime
   kind: runtime
-  version: 23.2.1.17
+  version: 23.2.1.18
   description: |
     Wine is a compatibility layer capable of running Windows applications  
     on Unix-like operating systems. It provides both a development toolkit  
@@ -43,7 +43,7 @@ build: |
       cat > $TEMP_DIR/opt/version.yaml << EOF
   version:
       base: 23.2.0.7
-      runtime: 23.2.1.17
+      runtime: 23.2.1.18
       deepin-box64: deepin-box64_0.3.2deepin5-1_arm64.deb
       deepin-wine8-stable: deepin-wine8-stable_8.16deepin42_arm64_striped.deb
       deepin-wine-helper: com.wine-helper.deepin_5.3.28-1_arm64.deb
@@ -65,7 +65,7 @@ build: |
   sed -i '$a $grandparent_dir/deepin-box64/box64 "$@"'  $TEMP_DIR/usr/bin/deepin-box64
 
   #更新原本/usr/bin/deepin-wine8-stable脚本的内容
-  sed -i '/deepin-wine8-stable/d' $TEMP_DIR/usr/bin/deepin-wine8-stable
+  sed -i '/EMU_CMD/d' $TEMP_DIR/usr/bin/deepin-wine8-stable
   sed -i '$a parent_dir=$(dirname "$(realpath "$0")")' $TEMP_DIR/usr/bin/deepin-wine8-stable
   sed -i '$a grandparent_dir=$(dirname "$parent_dir")' $TEMP_DIR/usr/bin/deepin-wine8-stable
   sed -i '$a export WINEDLLPATH=$grandparent_dir/deepin-wine8-stable/lib/wine' $TEMP_DIR/usr/bin/deepin-wine8-stable
